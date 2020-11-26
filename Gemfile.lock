@@ -131,6 +131,8 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.0.0)
       concurrent-ruby (~> 1.0)
+    jbuilder (2.10.1)
+      activesupport (>= 5.0.0)
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -316,6 +318,7 @@ DEPENDENCIES
   faker
   haml-rails
   httparty
+  jbuilder
   jquery-rails
   letter_opener
   listen
