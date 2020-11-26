@@ -11,6 +11,7 @@ gem "httparty"
 gem "jbuilder"
 gem "jquery-rails"
 gem "sass-rails"
+gem "sidekiq"
 gem "sqlite3"
 gem "uglifier"
 
