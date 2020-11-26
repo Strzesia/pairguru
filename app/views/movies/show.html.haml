@@ -1,5 +1,14 @@
-%h1= @movie.title
-.jumbotron
-  = @movie.description
+%h1= "#{@movie[:title]} (#{@movie[:rating]}/10)"
+%br
+.row
+  .col-sm-3
+    = image_tag(@movie[:poster_url], width: '100%', class: 'img-rounded')
+  .col-sm-9
+    .jumbotron
+      %p Description:
+      = @movie[:description]
+    .jumbotron
+      %p Plot summary:
+      = @movie[:plot]
 - if user_signed_in?
-  %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
+  %p= link_to 'Email me details about this movie', send_info_movie_path(@movie[:id]), class: 'btn btn-sm btn-default'
