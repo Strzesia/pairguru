@@ -7,7 +7,7 @@ gem "bootstrap-sass"
 gem "devise"
 gem "draper"
 gem "haml-rails"
-gem 'httparty'
+gem "httparty"
 gem "jquery-rails"
 gem "sass-rails"
 gem "sqlite3"
@@ -39,4 +39,5 @@ end
 
 group :test do
   gem "shoulda-matchers"
+  gem "webmock"
 end
