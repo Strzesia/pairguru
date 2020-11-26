@@ -2,11 +2,13 @@ class MoviesController < ApplicationController
   before_action :authenticate_user!, only: [:send_info]
 
   def index
-    @movies = Movie.all.decorate
+    movies = Movie.all
+    @movies = MovieDetailsFetcher.new.call(movies)
   end
 
   def show
-    @movie = Movie.find(params[:id])
+    movie = Movie.find(params[:id])
+    @movie = MovieDetailsFetcher.new.call([movie]).first
   end
 
   def send_info
