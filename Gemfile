@@ -7,6 +7,7 @@ gem "bootstrap-sass"
 gem "devise"
 gem "draper"
 gem "haml-rails"
+gem 'httparty'
 gem "jquery-rails"
 gem "sass-rails"
 gem "sqlite3"
