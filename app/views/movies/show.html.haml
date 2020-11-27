@@ -11,4 +11,19 @@
       %p Plot summary:
       = @movie[:plot]
 - if user_signed_in?
+  = form_with(url: comment_movie_url) do |f|
+    = f.hidden_field :movie_id, value: @movie[:id]
+    .input-group
+      = f.text_field :text, placeholder: 'add your comment', class: 'form-control'
+      .input-group-btn
+        = f.submit "save", class: 'btn btn-info'
+  %h4 comments
+  - @comments.each do |comment|
+    .panel.panel-info
+      .panel-heading
+        = comment.user.name
+        - if comment.user == current_user
+          = link_to 'delete comment', comment_path, method: :delete, class: 'pull-right'
+      .panel-body
+        %p= comment.text
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie[:id]), class: 'btn btn-sm btn-default'

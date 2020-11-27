@@ -10,11 +10,13 @@ Rails.application.routes.draw do
   resources :movies, only: [:index, :show] do
     member do
       get :send_info
+      post :comment
     end
     collection do
       get :export
     end
   end
+  resources :comments, only: [:destroy]
   namespace :api, defaults: { format: "json" } do
     namespace :v1 do
       resources :movies, only: %i[index show]
