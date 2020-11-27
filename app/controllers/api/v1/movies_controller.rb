@@ -2,7 +2,7 @@ module Api
   module V1
     class MoviesController < ActionController::API
       def index
-        @movies = Movie.all
+        @movies = Movie.includes(:genre)
         render :index
       end
 

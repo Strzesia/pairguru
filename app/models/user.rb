@@ -25,4 +25,13 @@ class User < ApplicationRecord
   has_many :comments
 
   validates :phone_number, format: { with: /\A[+]?\d+(?>[- .]\d+)*\z/, allow_nil: true }
+
+  scope :with_recent_comments, -> { includes(:comments)
+                                        .where(comments: { created_at: (Time.current - 7.days)..Time.current })
+                                        .merge(Comment.sorted)
+                                        .limit(10) }
+
+  def recent_comments_count
+    self.comments.where("comments.created_at > ?", 7.days.ago).count
+  end
 end
