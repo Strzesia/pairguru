@@ -1,10 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Comment, type: :model do
-  describe 'validated uniqueness of movie in user scope' do
+  describe "validated uniqueness of movie in user scope" do
     let(:user) { create(:user) }
     let(:movie) { create(:movie) }
-    let(:comment) { Comment.new(text: 'text', user: user, movie: movie) }
+    let(:comment) { Comment.new(text: "text", user: user, movie: movie) }
 
     context "when user already commented on movie" do
       before do

@@ -17,6 +17,11 @@ Rails.application.routes.draw do
     end
   end
   resources :comments, only: [:destroy]
+  resources :users, only: [] do
+    collection do
+      get :top_commenters
+    end
+  end
   namespace :api, defaults: { format: "json" } do
     namespace :v1 do
       resources :movies, only: %i[index show]

@@ -2,23 +2,23 @@ class MoviesController < ApplicationController
   before_action :authenticate_user!, only: [:send_info]
 
   def index
-    movies = Movie.all
+    movies = Movie.includes(:genre)
     @movies = MovieDetailsFetcher.new.call(movies)
   end
 
   def show
     movie = Movie.find(params[:id])
     @movie = MovieDetailsFetcher.new.call([movie]).first
-    @comments = movie.comments
+    @comments = movie.comments.includes(:user)
   end
 
   def comment
     movie = Movie.find(params[:id])
     comment = Comment.new(text: params[:text], user: current_user, movie: movie)
     if comment.save
-      redirect_to movie, notice: 'Comment added'
+      redirect_to movie, notice: "Comment added"
     else
-      redirect_to movie, flash: { danger: comment.errors.full_messages.join('. ') }
+      redirect_to movie, flash: { danger: comment.errors.full_messages.join(". ") }
     end
   end
 
