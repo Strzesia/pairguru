@@ -1,6 +1,9 @@
 require "rails_helper"
 
 describe "Movies requests", type: :request do
+  let(:movie) { create(:movie) }
+  let(:user) { create(:user) }
+
   describe "movies list" do
     let!(:movies) { create_list(:movie, 3) }
     before do
@@ -34,7 +37,6 @@ describe "Movies requests", type: :request do
   end
 
   describe "movie" do
-    let(:movie) { create(:movie) }
     before do
       body = {
         'data': {
@@ -60,6 +62,34 @@ describe "Movies requests", type: :request do
     it "displays poster" do
       visit "/movies/#{movie.id}"
       expect(page).to have_selector("img")
+    end
+  end
+
+  describe "send_info" do
+    before do
+      sign_in(user)
+    end
+
+    it "sends email" do
+      visit "/movies/#{movie.id}/send_info"
+      expect(page).to have_selector("div", text: "Email sent with movie info")
+    end
+  end
+
+  describe "export" do
+    before do
+      sign_in(user)
+    end
+
+    it "exports to csv" do
+      expect(ExportJob).to receive(:perform_later)
+      visit "/movies/export"
+      expect(page).to have_selector("div", text: "Movies exported")
+    end
+
+    it "performs a job" do
+      expect(ExportJob).to receive(:perform_later)
+      visit "/movies/export"
     end
   end
 end
