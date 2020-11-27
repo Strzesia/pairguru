@@ -9,16 +9,16 @@ describe "Movies requests", type: :request do
     before do
       movies.each do |movie|
         body = {
-            'data': {
-                'id': movie.id,
-                'type': "movie",
-                'attributes': {
-                    'title': movie.title,
-                    'plot': Faker::Lorem.sentence,
-                    'rating': 9.2,
-                    'poster': "/#{movie.title}.jpg"
-                }
+          'data': {
+            'id': movie.id,
+            'type': "movie",
+            'attributes': {
+              'title': movie.title,
+              'plot': Faker::Lorem.sentence,
+              'rating': 9.2,
+              'poster': "/#{movie.title}.jpg"
             }
+          }
         }
         title = ERB::Util.url_encode(movie.title)
         stub_fetching_movie_info(title, body)
@@ -39,16 +39,16 @@ describe "Movies requests", type: :request do
   describe "movie" do
     before do
       body = {
-          'data': {
-              'id': movie.id,
-              'type': "movie",
-              'attributes': {
-                  'title': movie.title,
-                  'plot': Faker::Lorem.sentence,
-                  'rating': 9.2,
-                  'poster': "/#{title}.jpg"
-              }
+        'data': {
+          'id': movie.id,
+          'type': "movie",
+          'attributes': {
+            'title': movie.title,
+            'plot': Faker::Lorem.sentence,
+            'rating': 9.2,
+            'poster': "/#{title}.jpg"
           }
+        }
       }
       title = ERB::Util.url_encode(movie.title)
       stub_fetching_movie_info(title, body)
@@ -93,21 +93,21 @@ describe "Movies requests", type: :request do
     end
   end
 
-  describe 'comment' do
+  describe "comment" do
     before do
       sign_in(user)
     end
 
     context "if user hasn't commented on the movie yet" do
-      it 'adds comment' do
+      it "adds comment" do
         expect do
-          post comment_movie_path(movie), params: { text: 'text' }
+          post comment_movie_path(movie), params: { text: "text" }
         end.to change(Comment, :count).by(1)
       end
 
-      it 'sets current user as comment author' do
-        post comment_movie_path(movie), params: { text: 'text' }
-        expect(Comment.last).to have_attributes(user: user, text: 'text')
+      it "sets current user as comment author" do
+        post comment_movie_path(movie), params: { text: "text" }
+        expect(Comment.last).to have_attributes(user: user, text: "text")
       end
     end
 
@@ -116,9 +116,9 @@ describe "Movies requests", type: :request do
         create(:comment, user: user, movie: movie)
       end
 
-      it 'adds comment' do
+      it "adds comment" do
         expect do
-          post comment_movie_path(movie), params: { text: 'text' }
+          post comment_movie_path(movie), params: { text: "text" }
         end.not_to change(Comment, :count)
       end
     end

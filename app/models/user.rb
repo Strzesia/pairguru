@@ -22,16 +22,19 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   validates :phone_number, format: { with: /\A[+]?\d+(?>[- .]\d+)*\z/, allow_nil: true }
 
-  scope :with_recent_comments, -> { includes(:comments)
-                                        .where(comments: { created_at: (Time.current - 7.days)..Time.current })
-                                        .merge(Comment.sorted)
-                                        .limit(10) }
+  scope :with_recent_comments,
+        -> {
+          includes(:comments)
+            .where(comments: { created_at: (Time.current - 7.days)..Time.current })
+            .merge(Comment.sorted)
+            .limit(10)
+        }
 
   def recent_comments_count
-    self.comments.where("comments.created_at > ?", 7.days.ago).count
+    comments.where("comments.created_at > ?", 7.days.ago).count
   end
 end

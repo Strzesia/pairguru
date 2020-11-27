@@ -16,9 +16,9 @@ class MoviesController < ApplicationController
     movie = Movie.find(params[:id])
     comment = Comment.new(text: params[:text], user: current_user, movie: movie)
     if comment.save
-      redirect_to movie, notice: 'Comment added'
+      redirect_to movie, notice: "Comment added"
     else
-      redirect_to movie, flash: { danger: comment.errors.full_messages.join('. ') }
+      redirect_to movie, flash: { danger: comment.errors.full_messages.join(". ") }
     end
   end
 
